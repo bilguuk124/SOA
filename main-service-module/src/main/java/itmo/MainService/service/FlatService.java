@@ -9,8 +9,8 @@ import itmo.MainService.repository.HouseRepository;
 import itmo.MainService.utility.FilterCriteria;
 import itmo.MainService.utility.FlatSpecification;
 import itmo.MainService.utility.SortDirection;
-import jakarta.validation.Valid;
-import jakarta.validation.ValidationException;
+import javax.validation.Valid;
+import javax.validation.ValidationException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -201,7 +201,7 @@ public class FlatService {
         return flatRepository.flatCountWithNumberOfRoomsLessThan(minRooms);
     }
 
-    public Flat getCheapOrExpensiveFlatWithOrWithoutBalcony(String price, String balcony) {
+    public Flat getCheapOrExpensiveFlatWithOrWithoutBalcony(String price, String balcony) throws IncorrectParametersException {
         if (price.equals("cheap") && balcony.equals("yes")){
             return flatRepository.findFirstByHasBalconyTrueOrderByPriceAsc();
         }
@@ -211,6 +211,12 @@ public class FlatService {
         if (price.equals("cheap") && balcony.equals("no")){
             return flatRepository.findFirstByHasBalconyFalseOrderByPriceAsc();
         }
-        return flatRepository.findFirstByHasBalconyFalseOrderByPriceDesc();
+        if (price.equals("expensive") && balcony.equals("no"))
+            return flatRepository.findFirstByHasBalconyFalseOrderByPriceDesc();
+        throw new IncorrectParametersException("Not cheap|expensive or yes|no");
+    }
+
+    public Flat getCheaperOfTwo(int id1, int id2) {
+        return flatRepository.findFirstByIdEqualsOrIdEqualsOrderByPriceAsc(id1, id2);
     }
 }

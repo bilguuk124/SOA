@@ -1,4 +1,4 @@
-package itmo.SecondService;
+package SecondService;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

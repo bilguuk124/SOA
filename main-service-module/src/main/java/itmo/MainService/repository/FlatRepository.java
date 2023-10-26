@@ -14,6 +14,7 @@ import java.util.List;
 
 @Repository
 public interface FlatRepository extends JpaRepository<Flat, Integer> {
+    Flat findFirstByIdEqualsOrIdEqualsOrderByPriceAsc(Integer id, Integer id1);
     Flat findFirstByHasBalconyFalseOrderByPriceDesc();
     Flat findFirstByHasBalconyFalseOrderByPriceAsc();
     Flat findFirstByHasBalconyTrueOrderByPriceAsc();

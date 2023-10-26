@@ -1,5 +1,6 @@
 package itmo.MainService.controller;
 
+import io.swagger.annotations.ApiOperation;
 import itmo.MainService.DTO.FlatCreateDTO;
 import itmo.MainService.entity.Flat;
 import itmo.MainService.exception.FlatNotFoundException;
@@ -8,7 +9,7 @@ import itmo.MainService.exception.IncorrectParametersException;
 import itmo.MainService.service.FlatService;
 import itmo.MainService.utility.FilterCriteria;
 import itmo.MainService.utility.SortDirection;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,18 +29,21 @@ public class FlatController {
         this.flatService = flatService;
     }
 
+    @ApiOperation(value="Returns Flat by id" ,nickname = "Finding a flat by id")
     @GetMapping("/{id}")
     public Flat getFlatById(@PathVariable int id) throws FlatNotFoundException {
         logger.info("Received a request to get a flat by id =" +id);
         return flatService.getFlatById(id);
     }
 
+    @ApiOperation(value="Returns all flats paged" ,nickname = "See all flats")
     @GetMapping("")
     public List<Flat> getAllFlats(int pageNumber){
         logger.info("Received a request to get all flats. Page =" + pageNumber);
         return flatService.getAllFlats(pageNumber);
     }
 
+    @ApiOperation(value="Returns all flats filtered" ,nickname = "See certain flats by filter")
     @GetMapping("/")
     public List<Flat> getFlatsFiltered(
             @RequestBody List<FilterCriteria> filterCriteriaList,
@@ -55,6 +59,7 @@ public class FlatController {
         return flatService.getFlatsWithFilterAndPage(filterCriteriaList, pageNumber);
     }
 
+    @ApiOperation(value="Update flat by id" ,nickname = "Updating a flat")
     @PutMapping("/{id}")
     public Flat updateFlatById(
             @PathVariable int id,
@@ -76,12 +81,14 @@ public class FlatController {
                 newHouseName, price, hasBalcony);
     }
 
+    @ApiOperation(value="Delete flat by id" ,nickname = "Deleting a flat")
     @DeleteMapping("/{id}")
     public void deleteFlatById(@PathVariable int id) throws FlatNotFoundException {
         logger.info("Received a request to delete a flat by id " + id);
         flatService.deleteFlatById(id);
     }
 
+    @ApiOperation(value="Create a new flat" ,nickname = "Creating a new flat")
     @PostMapping("")
     public Flat createFlat(
             @Valid @RequestBody FlatCreateDTO flatCreateDTO
@@ -101,18 +108,21 @@ public class FlatController {
                 flatCreateDTO.getPrice(), flatCreateDTO.getHasBalcony());
     }
 
+    @ApiOperation(value="Get flats from one house" ,nickname = "Find flats from one house")
     @GetMapping("/same-house/count")
     public Integer findFlatsWithSameHouse(@RequestParam String houseName) throws HouseNotFoundException, IncorrectParametersException {
         logger.info("Received a request to get count of flats in the same house");
         return flatService.getFlatsWithSameHouse(houseName);
     }
 
+    @ApiOperation(value="Get count of flats with rooms less than" ,nickname = "Get count of flats with rooms less than")
     @GetMapping("/number-of-rooms/less")
     public Long findFlatsWithNumberOfRoomsLessThan(@RequestParam Integer minRooms){
         logger.info("Received a request to get count of flats with less than " + minRooms + " rooms");
         return flatService.getFlatsWithLessNumberOfRooms(minRooms);
     }
 
+    @ApiOperation(value="Delete flats from one house" ,nickname = "Delete flats from one house")
     @DeleteMapping("/same-house/remove")
     public void deleteFlatsWithSameHouse(@RequestParam String houseName) throws IncorrectParametersException, HouseNotFoundException {
         logger.info("Received request to delete all flats with house = " + houseName);

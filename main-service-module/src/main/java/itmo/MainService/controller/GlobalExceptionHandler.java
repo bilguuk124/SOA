@@ -1,16 +1,18 @@
 package itmo.MainService.controller;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import itmo.MainService.exception.FlatNotFoundException;
 import itmo.MainService.exception.HouseExistsException;
 import itmo.MainService.exception.HouseNotFoundException;
 import itmo.MainService.exception.IncorrectParametersException;
-import jakarta.validation.ValidationException;
+import javax.validation.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
+@Hidden
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(FlatNotFoundException.class)

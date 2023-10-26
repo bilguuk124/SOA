@@ -8,8 +8,7 @@ import itmo.MainService.exception.IncorrectParametersException;
 import itmo.MainService.service.HouseService;
 import itmo.MainService.utility.FilterCriteria;
 import itmo.MainService.utility.SortDirection;
-import jakarta.validation.Valid;
-import lombok.extern.log4j.Log4j;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

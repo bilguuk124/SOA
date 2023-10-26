@@ -1,10 +1,10 @@
 package itmo.MainService.entity;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.Entity;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.NotNull;
+import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
